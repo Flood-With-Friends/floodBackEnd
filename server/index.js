@@ -96,8 +96,7 @@ app.get('/auth/google/callback', passport.authenticate('google', { failureRedire
 
 // Logout route
 app.get('/logout', (req, res) => {
-  req.logout();
-  res.redirect('/');
+  req.session.destroy(() => res.redirect('/'));
 });
 
 let reportData;
