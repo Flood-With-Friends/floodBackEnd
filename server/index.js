@@ -354,7 +354,7 @@ app.post('/submitReport', async (req, res) => {
         createReport(reportData);
       })
       .then(() => {
-        res.status(201).send('got ya report...Allen');
+        res.status(201).send('we received your report');
       });
   } else {
     // user does not have image
@@ -366,14 +366,14 @@ app.post('/submitReport', async (req, res) => {
       id: userInfo.id,
     };
     await createReport(reportData);
-    res.status(201).send('got ya report...Allen');
+    res.status(201).send('we received your report');
   }
 });
 
 app.get('/getContacts', async (req, res) => {
   console.log(req.query);
   const userInfo = await findGoogleUser(req.query);
-  getContacts(userInfo.rows[0])
+  getContacts(userInfo)
     .then((contacts) => {
       res.send(contacts);
     })
@@ -386,7 +386,7 @@ app.post('/submitContacts', async (req, res) => {
   console.log(req.body.contacts);
   const userInfo = await findGoogleUser(req.body.contacts);
   const contacts = {
-    user_id: userInfo.rows[0].id,
+    user_id: userInfo.id,
     name1: req.body.contacts.name1,
     name2: req.body.contacts.name2,
     name3: req.body.contacts.name3,
